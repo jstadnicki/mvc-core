@@ -1,4 +1,6 @@
-﻿@{
+﻿@using MvcCoreTodo.Controllers
+@model List<TodoItem>
+@{
     Layout = null;
 }
 
@@ -9,8 +11,22 @@
     <title>.NET Core ASP.MVC Ultra Awesome ToDo Applition</title>
 </head>
 <body>
-<div>
-    .NET Core ASP.MVC Ultra Awesome ToDo Applition - the proper part
-</div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>What</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Text</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

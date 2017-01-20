@@ -1,25 +1,42 @@
 ﻿namespace MvcCoreTodo.Controllers
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {
+        private readonly static List<TodoItem> tasks = new List<TodoItem>();
+
+        [HttpGet]
         public ActionResult Index()
         {
-            var list = new List<TodoItem>();
-            list.Add(new TodoItem { Text = "Napisać na blogu" });
-            list.Add(new TodoItem { Text = "Czytać przez 15 minut" });
-            list.Add(new TodoItem { Text = "Ogarnąć prezentacje" });
-            list.Add(new TodoItem { Text = "Umyć zęby" });
+            return this.View("Index", tasks);
+        }
 
-            return this.View("Index", list);
+        [HttpGet]
+        public ActionResult AddTask()
+        {
+            return this.View("AddTask");
+        }
+
+        [HttpPost]
+        public ActionResult AddTask(TodoItem item)
+        {
+            if (this.ModelState.IsValid)
+            {
+                tasks.Add(item);
+                return this.RedirectToAction("Index");
+            }
+
+            return this.View("AddTask");
         }
     }
 
     public class TodoItem
     {
+        [Required]
         public string Text { get; set; }
     }
 }

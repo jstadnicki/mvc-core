@@ -1,0 +1,13 @@
+﻿@using MvcCoreTodo.Controllers
+@model TodoItem
+
+@{
+    Layout = null;
+}
+
+<form asp-action="AddTask" asp-controller="Home" method="post">
+    <div asp-validation-summary="All"></div>
+    <label asp-for="Text"></label>
+    <input type="text" asp-for="Text" />
+    <input type="submit" value="add" />
+</form>

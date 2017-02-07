@@ -4,9 +4,11 @@
 
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly Models.PersonModel person;
+
+        public HomeController()
         {
-            var person = new PersonModel
+            this.person = new Models.PersonModel
             {
                 UniqueId = 123234,
                 FirstName = "Jarek",
@@ -15,45 +17,36 @@
                 City = "Wrocław",
                 Sex = Sex.Male
             };
-
-            return this.View("Index", person);
         }
 
+        public ActionResult Index()
+        {
+            return this.View(person);
+        }
 
         public ActionResult Secret()
         {
-            var person = new PersonModel
-            {
-                UniqueId = 123234,
-                FirstName = "Jarek",
-                LastName = "Stadnicki",
-                Country = "Polska",
-                City = "Wrocław",
-                Sex = Sex.Male
-            };
-
-            return this.View("Secret", person);
+            return this.View("ThisIsTotalyDifferentView", person);
         }
-    }
 
-    public class PersonModel
-    {
-        public long UniqueId { get; set; }
-        public string FirstName { get; set; }
+        public ActionResult IDontNeedModel()
+        {
+            return this.View();
+        }
 
-        public string LastName { get; set; }
+        public ActionResult WithoutLayout()
+        {
+            return this.View(person);
+        }
 
-        public string Country { get; set; }
+        public ActionResult ReallyWithoutLayout()
+        {
+            return this.View(person);
+        }
 
-        public string City { get; set; }
-
-        public Sex Sex { get; set; }
-    }
-
-    public enum Sex
-    {
-        Unknown = 0,
-        Male = 1,
-        Female = 2
+        public ActionResult NoMatchingViewFound()
+        {
+            return this.View();
+        }
     }
 }
